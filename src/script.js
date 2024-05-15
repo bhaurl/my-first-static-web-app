@@ -51,7 +51,7 @@ function createFallingItem() {
 
     function moveItem() {
         const itemTop = parseInt(item.style.top, 10);
-        if (itemTop >= gameArea.clientHeight - basket.clientHeight && isCaught(item)) {
+        if (itemTop >= gameArea.clientHeight - basket.clientHeight - 30 && isCaught(item)) {
             clearInterval(itemInterval);
             item.remove();
             score++;
