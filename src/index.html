@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cool</title>
+    <title>Video Abspielen</title>
     <style>
         body, html {
             margin: 0;
@@ -16,17 +16,18 @@
             background-color: #f0f0f0;
         }
         .video-container {
-            display: none;
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            pointer-events: none;
         }
         video {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            position: absolute;
         }
         .button {
             background-color: red;
@@ -36,33 +37,27 @@
             font-size: 24px;
             cursor: pointer;
             border-radius: 10px;
+            z-index: 1;
         }
     </style>
 </head>
 <body>
     <button class="button" id="startButton" onclick="playVideo()">Don't touch me</button>
     
-    <div class="video-container" id="videoContainer">
-        <video id="myVideo">
-            <source src="rick.mp4" type="video/mp4">
-            Dein Browser unterstützt das Video-Tag nicht.
-        </video>
-    </div>
+    <div class="video-container" id="videoContainer"></div>
 
     <script>
         function playVideo() {
-            var video = document.getElementById('myVideo');
             var videoContainer = document.getElementById('videoContainer');
-            var startButton = document.getElementById('startButton');
-            
-            // Blende den Button aus
-            startButton.style.display = 'none';
-            
-            // Blende das Video ein
-            videoContainer.style.display = 'block';
-            
-            // Spiele das Video ab
-            video.play();
+            var newVideo = document.createElement('video');
+            newVideo.src = 'rick.mp4';
+            newVideo.autoplay = true;
+            newVideo.controls = false;
+            newVideo.style.position = 'absolute';
+            newVideo.style.width = '100%';
+            newVideo.style.height = '100%';
+            newVideo.style.objectFit = 'cover';
+            videoContainer.appendChild(newVideo);
         }
     </script>
 </body>
