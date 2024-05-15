@@ -6,14 +6,18 @@ const startButton = document.getElementById('start-button');
 let score = 0;
 let gameInterval;
 let fallingInterval;
+let basketLeft = 200; // Start position of the basket
+let basketSpeed = 5; // Speed of the basket
 
 function startGame() {
     score = 0;
     scoreDisplay.textContent = score;
     startButton.style.display = 'none';
-    basket.style.left = '200px';
+    basket.style.left = basketLeft + 'px';
 
-    gameInterval = setInterval(moveBasket, 10);
+    document.addEventListener('keydown', moveBasket);
+
+    gameInterval = setInterval(updateGame, 20);
     fallingInterval = setInterval(createFallingItem, 1000);
 }
 
@@ -23,43 +27,45 @@ function endGame() {
     const items = document.querySelectorAll('.falling-item');
     items.forEach(item => item.remove());
     startButton.style.display = 'inline-block';
+    document.removeEventListener('keydown', moveBasket);
     alert(`Game over! Your score is ${score}.`);
 }
 
-function moveBasket() {
-    document.addEventListener('keydown', (event) => {
-        const left = parseInt(basket.style.left, 10);
-        if (event.key === 'ArrowLeft' && left > 0) {
-            basket.style.left = left - 5 + 'px';
-        } else if (event.key === 'ArrowRight' && left < 400) {
-            basket.style.left = left + 5 + 'px';
-        }
-    });
+function moveBasket(event) {
+    const gameAreaRect = gameArea.getBoundingClientRect();
+    if (event.key === 'ArrowLeft' && basketLeft > 0) {
+        basketLeft -= basketSpeed;
+        basket.style.left = basketLeft + 'px';
+    } else if (event.key === 'ArrowRight' && basketLeft < gameAreaRect.width - basket.clientWidth) {
+        basketLeft += basketSpeed;
+        basket.style.left = basketLeft + 'px';
+    }
 }
 
 function createFallingItem() {
     const item = document.createElement('div');
     item.className = 'falling-item';
-    item.style.left = Math.floor(Math.random() * 470) + 'px';
+    item.style.left = Math.floor(Math.random() * (gameArea.clientWidth - 30)) + 'px';
+    item.style.top = '0px';
     gameArea.appendChild(item);
 
-    let itemInterval = setInterval(() => {
-        let itemTop = parseInt(window.getComputedStyle(item).getPropertyValue('top'));
-        if (itemTop >= 470) {
+    function moveItem() {
+        const itemTop = parseInt(item.style.top, 10);
+        if (itemTop >= gameArea.clientHeight - basket.clientHeight && isCaught(item)) {
+            clearInterval(itemInterval);
+            item.remove();
+            score++;
+            scoreDisplay.textContent = score;
+        } else if (itemTop >= gameArea.clientHeight - 30) {
             clearInterval(itemInterval);
             item.remove();
             endGame();
         } else {
             item.style.top = itemTop + 5 + 'px';
-
-            if (isCaught(item)) {
-                clearInterval(itemInterval);
-                item.remove();
-                score++;
-                scoreDisplay.textContent = score;
-            }
         }
-    }, 20);
+    }
+
+    const itemInterval = setInterval(moveItem, 20);
 }
 
 function isCaught(item) {
@@ -72,3 +78,7 @@ function isCaught(item) {
 }
 
 startButton.addEventListener('click', startGame);
+
+function updateGame() {
+    // This function can be used to update other game elements if needed
+}
