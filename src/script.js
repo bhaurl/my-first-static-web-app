@@ -17,8 +17,8 @@ function startGame() {
 
     document.addEventListener('keydown', moveBasket);
 
-    gameInterval = setInterval(updateGame, 20);
-    fallingInterval = setInterval(createFallingItem, 750);
+    gameInterval = setInterval(updateGame, 10);
+    fallingInterval = setInterval(createFallingItem, 600);
 }
 
 function endGame() {
