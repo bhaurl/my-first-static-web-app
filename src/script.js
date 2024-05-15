@@ -7,7 +7,7 @@ let score = 0;
 let gameInterval;
 let fallingInterval;
 let basketLeft = 200; // Start position of the basket
-let basketSpeed = 10; // Speed of the basket
+let basketSpeed = 5; // Speed of the basket
 
 function startGame() {
     score = 0;
