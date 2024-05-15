@@ -3,38 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coole Webseite</title>
+    <title>Click the Button Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Willkommen auf meiner coolen Webseite</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">Über mich</a></li>
-                <li><a href="#contact">Kontakt</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="home">
-            <h2>Home</h2>
-            <p>Dies ist die Startseite meiner Webseite.</p>
-            <button id="changeColorButton">Farbe ändern</button>
-        </section>
-        <section id="about">
-            <h2>Über mich</h2>
-            <p>Ich bin Loui, ein Informatik-Lernender.</p>
-        </section>
-        <section id="contact">
-            <h2>Kontakt</h2>
-            <p>Du kannst mich per E-Mail erreichen: <a href="mailto:loui@example.com">loui@example.com</a></p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 Loui</p>
-    </footer>
+    <div id="game-container">
+        <h1>Click the Button Game</h1>
+        <p id="timer">Time left: <span id="time">10</span> seconds</p>
+        <p id="score">Score: <span id="score-count">0</span></p>
+        <button id="click-button">Click Me!</button>
+        <button id="start-button">Start Game</button>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
