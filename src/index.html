@@ -13,9 +13,13 @@
     </audio>
 
     <script>
-        document.body.addEventListener('click', function() {
-            var audio = document.getElementById('myAudio');
-            audio.play();
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.addEventListener('click', function() {
+                var audio = document.getElementById('myAudio');
+                setInterval(function() {
+                    audio.play();
+                }, 500); // 500 Millisekunden = 0.5 Sekunden
+            });
         });
     </script>
 </body>
