@@ -6,9 +6,17 @@
     <title>Game</title>
 </head>
 <body>
-    <audio controls autoplay>
+    <p>Hallo lol.</p>
+    <audio id="myAudio">
         <source src="rick.mp3" type="audio/mpeg">
         Dein Browser unterstützt das Audio-Tag nicht.
     </audio>
+
+    <script>
+        document.body.addEventListener('click', function() {
+            var audio = document.getElementById('myAudio');
+            audio.play();
+        });
+    </script>
 </body>
 </html>
