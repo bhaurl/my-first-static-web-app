@@ -3,20 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game</title>
+    <title>Sound Abspielen</title>
+    <style>
+        .button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <p>Hallo lol.</p>
     <audio id="myAudio">
         <source src="rick.mp3" type="audio/mpeg">
         Dein Browser unterstützt das Audio-Tag nicht.
     </audio>
 
+    <button class="button" onclick="playAudio()">Play Sound</button>
+
     <script>
-        var audio = document.getElementById('myAudio');
-        setInterval(function() {
+        function playAudio() {
+            var audio = document.getElementById('myAudio');
             audio.play();
-        }, 500); // 500 Millisekunden = 0.5 Sekunden
+        }
     </script>
 </body>
 </html>
