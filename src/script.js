@@ -1,39 +1,74 @@
-let score = 0;
-let timeLeft = 10;
-let timerInterval;
-
-const timeDisplay = document.getElementById('time');
+const gameArea = document.getElementById('game-area');
+const basket = document.getElementById('basket');
 const scoreDisplay = document.getElementById('score-count');
-const clickButton = document.getElementById('click-button');
 const startButton = document.getElementById('start-button');
 
-clickButton.addEventListener('click', () => {
-    score++;
-    scoreDisplay.textContent = score;
-});
-
-startButton.addEventListener('click', startGame);
+let score = 0;
+let gameInterval;
+let fallingInterval;
 
 function startGame() {
     score = 0;
-    timeLeft = 10;
     scoreDisplay.textContent = score;
-    timeDisplay.textContent = timeLeft;
-    clickButton.style.display = 'inline-block';
     startButton.style.display = 'none';
+    basket.style.left = '200px';
 
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        timeDisplay.textContent = timeLeft;
-        if (timeLeft === 0) {
-            clearInterval(timerInterval);
-            endGame();
-        }
-    }, 1000);
+    gameInterval = setInterval(moveBasket, 10);
+    fallingInterval = setInterval(createFallingItem, 1000);
 }
 
 function endGame() {
-    clickButton.style.display = 'none';
+    clearInterval(gameInterval);
+    clearInterval(fallingInterval);
+    const items = document.querySelectorAll('.falling-item');
+    items.forEach(item => item.remove());
     startButton.style.display = 'inline-block';
     alert(`Game over! Your score is ${score}.`);
 }
+
+function moveBasket() {
+    document.addEventListener('keydown', (event) => {
+        const left = parseInt(basket.style.left, 10);
+        if (event.key === 'ArrowLeft' && left > 0) {
+            basket.style.left = left - 5 + 'px';
+        } else if (event.key === 'ArrowRight' && left < 400) {
+            basket.style.left = left + 5 + 'px';
+        }
+    });
+}
+
+function createFallingItem() {
+    const item = document.createElement('div');
+    item.className = 'falling-item';
+    item.style.left = Math.floor(Math.random() * 470) + 'px';
+    gameArea.appendChild(item);
+
+    let itemInterval = setInterval(() => {
+        let itemTop = parseInt(window.getComputedStyle(item).getPropertyValue('top'));
+        if (itemTop >= 470) {
+            clearInterval(itemInterval);
+            item.remove();
+            endGame();
+        } else {
+            item.style.top = itemTop + 5 + 'px';
+
+            if (isCaught(item)) {
+                clearInterval(itemInterval);
+                item.remove();
+                score++;
+                scoreDisplay.textContent = score;
+            }
+        }
+    }, 20);
+}
+
+function isCaught(item) {
+    const itemRect = item.getBoundingClientRect();
+    const basketRect = basket.getBoundingClientRect();
+    return !(itemRect.bottom < basketRect.top || 
+             itemRect.top > basketRect.bottom || 
+             itemRect.right < basketRect.left || 
+             itemRect.left > basketRect.right);
+}
+
+startButton.addEventListener('click', startGame);
