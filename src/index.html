@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sound Abspielen</title>
     <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
         .button {
             background-color: red;
             color: white;
@@ -22,7 +30,7 @@
         Dein Browser unterstützt das Audio-Tag nicht.
     </audio>
 
-    <button class="button" onclick="playAudio()">Play Sound</button>
+    <button class="button" onclick="playAudio()">Don't click me</button>
 
     <script>
         function playAudio() {
